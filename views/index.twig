@@ -1,0 +1,54 @@
+{# index.twig #}
+{% extends 'template.twig' %}
+{% block main %}
+
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">{{ page_title }}</h1>
+        </div>
+    </section>
+
+    <div class="album text-muted">
+        <div class="container">
+
+            <div class="row">
+                {{ movies.genres }}
+                {% for movie in movies  %}
+                <div class="card">
+                    <img src="{{ base_url }}/w342/{{ movie.poster_path }}" class="card-img-top img-fluid" />
+                    <div class="card-body">
+                        <h4 class="card-title">{{ movie.title }}</h4>
+                        <p class="card-text">Genres:
+                            {% for genre in movie.genres %}
+                                {% if loop.last %}
+                                    {{ genre }}
+                                {% else %}
+                                    {{ genre }},
+                                {% endif %}
+                            {% endfor %}</p>
+                        <p class="card-text">Release Date: {{ movie.release_date }}</p>
+                        <p class="card-text text-center"><a href="/details/{{ movie.id }}">More details</a></p>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    {% if cur_page > 1 %}
+                    <li class="page-item">
+                        <a class="page-link" href="/{{ cur_page-1 }}" tabindex="-1">Previous</a>
+                    </li>
+                    {% endif %}
+                    {% if cur_page < total_pages %}
+                    <li class="page-item">
+                        <a class="page-link" href="/{{ cur_page+1 }}">Next</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+
+{% endblock %}
